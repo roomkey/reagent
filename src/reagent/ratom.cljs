@@ -336,8 +336,7 @@
 
 (defn with-let-values [key]
   (if-some [c *ratom-context*]
-    (cached-reaction array c key
-                     nil with-let-destroy)
+    (cached-reaction array c key nil with-let-destroy)
     (array)))
 
 
