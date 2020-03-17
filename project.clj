@@ -1,4 +1,4 @@
-(defproject reagent :lein-v
+(defproject com.roomkey/reagent :lein-v
   :url "http://github.com/reagent-project/reagent"
   :license {:name "MIT"}
   :description "A simple ClojureScript interface to React"
