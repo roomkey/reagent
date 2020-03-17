@@ -16,12 +16,11 @@
 (def next-tick
   (if-not is-client
     fake-raf
-    (let [w js/window]
-      (or (.-requestAnimationFrame w)
-          (.-webkitRequestAnimationFrame w)
-          (.-mozRequestAnimationFrame w)
-          (.-msRequestAnimationFrame w)
-          fake-raf))))
+    (or (. (. js/window -requestAnimationFrame) bind js/window)
+        (. (. js/window -webkitRequestAnimationFrame) bind js/window)
+        (. (. js/window -mozRequestAnimationFrame) bind js/window)
+        (. (. js/window -msRequestAnimationFrame) bind js/window)
+        fake-raf)))
 
 (defn compare-mount-order
   [^clj c1 ^clj c2]
