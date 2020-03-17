@@ -1,7 +1,9 @@
-(defproject reagent "0.10.0"
+(defproject reagent :lein-v
   :url "http://github.com/reagent-project/reagent"
   :license {:name "MIT"}
   :description "A simple ClojureScript interface to React"
+
+  :repositories {"rk-maven" {:url "s3p://rk-maven/releases/" :no-auth true}}
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  ;; If :npm-deps enabled, these are used only for externs.
@@ -14,7 +16,10 @@
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-doo "0.1.11"]
             [lein-codox "0.10.7"]
-            [lein-figwheel "0.5.19"]]
+            [lein-figwheel "0.5.19"]
+            [com.roomkey/lein-v "7.0.0"]]
+
+  :middleware [lein-v.plugin/middleware]
 
   :source-paths ["src"]
 
@@ -186,4 +191,10 @@
                 :closure-warnings {:global-this :off}
                 :npm-deps true
                 :aot-cache true
-                :checked-arrays :warn}}]})
+                :checked-arrays :warn}}]}
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["v" "update"] ;; compute new version & tag it
+                  ["vcs" "push"]
+                  ["v" "abort-when-not-anchored"]
+                  ["deploy" "rk-maven"]])
